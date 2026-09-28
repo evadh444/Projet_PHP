@@ -3,6 +3,7 @@
 // Récupération de l'email + champ d'erreur vide
 $errors = [];
 $values = ['email' => ''];
+$password = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $values['email']= trim($_POST['email'] ?? '');
@@ -23,20 +24,22 @@ if ($password === '') {
 // Vérifier si les identifiants sont corrects + redirection vers une page si ok
 
 if(!$errors) {
-    $sql = "SELECT UseId, email, mot_de_passe, role FROM User WHERE email =?";
+    $sql = "SELECT UserId, email, passwordHash, role FROM [User] WHERE email =?";
     $statement = $pdo->prepare($sql);
     $statement->execute([$values['email']]);
     $user = $statement->fetch();   // Récup. une seule ligne
 
-    if(!$user || !password_verify($password, $user['mot_de_passe'])) {
+    if(!$user || !password_verify($password, $user['passwordHash'])) {
         $errors['global'] = "Email et/ou mot de passe incorrect.";
     } else {
         $_SESSION['user'] = [
+            'id' => $user['UserId'],
             'email' => $values['email'],
             'role' => $user['role']
         ];
 
         header("Location: index.php");
+        exit;
     }
 }
 ?>

@@ -19,7 +19,7 @@ print_r($prestations);
             <p><?=  $prestation["dureeMinute"] ?></p>
 
             <div class="actions">
-                <a href="index.php?page=prestations-details&amp;id=<?= $prestation['PrestationId'] ?>" class="btn">Détails</a>
+                <a href="index.php?page=Prestation-details&amp;id=<?= $prestation['PrestationId'] ?>" class="btn">Détails</a>
 
                 <?php if (isset($_SESSION['user'])) : ?>
                     <a href="index.php?page=reservations&amp;id=<?= $prestation['PrestationId'] ?>" class="btn">Réserver</a>
@@ -30,11 +30,11 @@ print_r($prestations);
                 <?php if (
                     isset($_SESSION['user']) &&
                     $_SESSION['user']['role'] === 'ADMIN') : ?>
-                    <a href="index.php?page=prestations-edit&amp;id=<?= $prestation['PrestationId'] ?>" class="btn">Modifier</a>
+                    <a href="index.php?page=Prestation-edit&amp;id=<?= $prestation['PrestationId'] ?>" class="btn">Modifier</a>
 
                     <form 
                     method="post" 
-                    action="index.php?page=prestations-delete"
+                    action="index.php?page=Prestation-delete"
                     onsubmit="return confirm('Voulez-vous supprimer <?= $prestation['nomPrestation'] ?> ?')">
 
                     <input type="hidden" name="id" value="<?= $prestation['PrestationId'] ?>">

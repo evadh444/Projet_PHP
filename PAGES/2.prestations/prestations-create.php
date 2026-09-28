@@ -68,7 +68,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $values['dureeMinute']
         ]);
         $newPrestationId = $pdo->lastInsertId();
-        header('Location: index.php?page=Prestations-details&id=' . $newPrestationId);
+        header('Location: index.php?page=Prestation-details&id=' . $newPrestationId);
         exit;
         } catch (PDOException $e) {
             $errors['database'] = "Une erreur est survenue lors de la création de la prestation";

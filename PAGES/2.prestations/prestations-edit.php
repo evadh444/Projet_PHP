@@ -5,7 +5,7 @@ $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
 $query = "SELECT PrestationId, nomPrestation, description, prix, dureeMinute FROM Prestation ORDER BY nomPrestation";
 
-$statement = $pdo->prepare($sql);
+$statement = $pdo->prepare($query);
 $statement->execute([$id]);
 
 $prestation = $statement->fetch();
@@ -46,7 +46,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     // 3.Prix
     if($values['prix'] !== '') {
-        $prix = filter_var($values[$prix], FILTER_VALIDATE_FLOAT);
+        $prix = filter_var($values['prix'], FILTER_VALIDATE_FLOAT);
         if(!$prix || $prix < 0){
             $errors['prix'] = "Le prix doit être positif";
         }
@@ -80,7 +80,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id
         ]);
 
-        header('Location: index.php?page=prestations-details&id=' . $id);
+        header('Location: index.php?page=Prestation-details&id=' . $id);
         } catch (PDOException $e) {
         $errors['database'] = "Une erreur est survenue lors de la modification de la prestation";
         }
@@ -102,7 +102,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 <form method="post">
 
     <div>
-        <label for="nomPrestation">Nom de la préstation</label>
+        <label for="nomPrestation">Nom de la préstation : *</label>
         <input type="text" name="nomPrestation" id="nomPrestation" required value="<?= $values['nomPrestation'] ?>">
         <?php if (isset($errors['nomPrestation'])) : ?>
             <span class="error"><?= $errors['nomPrestation'] ?></span>
@@ -110,7 +110,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div>
-        <label for="prix">Prix : </label>
+        <label for="prix">Prix : *</label>
         <input type="number" name="prix" id="prix" required value="<?= $values['prix'] ?>">
         <?php if (isset($errors['prix'])) : ?>
             <span class="error"><?= $errors['prix'] ?></span>
@@ -118,7 +118,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div>
-        <label for="dureeMinute">Durée de la préstation</label>
+        <label for="dureeMinute">Durée de la préstation : *</label>
         <input type="number" name="dureeMinute" id="dureeMinute" required value="<?= $values['dureeMinute'] ?>">
         <?php if (isset($errors['dureeMinute'])) : ?>
             <span class="error"><?=  $errors['dureeMinute'] ?></span>

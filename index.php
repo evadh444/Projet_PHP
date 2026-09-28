@@ -15,31 +15,32 @@ $routes = [
     'Prestations' => [
         'file' => 'pages/2.prestations/prestations-list.php',
         'title' => 'Toutes les prestations',
-        // 'roles' => ['user', 'admin']
+        'roles' => ['user', 'admin']
     ],                                  //Liste(ou Read)
 
     'Prestation-details' => [
         'file' => 'pages/2.prestations/prestations-details.php',
         'title' => 'Détails de la préstation',
-        // 'roles' => ['user', 'admin']
+        'roles' => ['user', 'admin']
     ],                                  //Détails
 
     'Prestation-create' => [
         'file' => 'pages/2.prestations/prestations-create.php',
         'title' => 'Créer une préstation',
-        // 'roles' => ['admin']
+        'roles' => ['admin']
 
     ],
     
     'Prestation-edit' => [
         'file' => 'pages/2.prestations/prestations-edit.php',
         'title' => 'Modifier une préstation',
-        // 'role' => [admin]
+        'role' => ['ADMIN']
     ],
     
     'Prestation-delete' => [
         'file' => 'pages/2.prestations/prestations-delete.php',
-        'title' => 'Supprimer une préstation'
+        'title' => 'Supprimer une préstation',
+        'role' => ['ADMIN']
     ],
     
 
@@ -47,7 +48,7 @@ $routes = [
     'Reservations' => [
         'file' => 'pages/reservations.php',
         'title' => 'Réserver un créneau',
-        // 'roles' => ['user', 'admin']
+        'roles' => ['user', 'admin']
     ],
 
 
@@ -63,7 +64,6 @@ $routes = [
         'file' => 'pages/3.ateliers/ateliers-details.php',
         'title' => 'Détails de l\'atelier'
     ],
-
 
     
     'Inscriptions' => [
@@ -86,6 +86,11 @@ $routes = [
         'file' => 'pages/1.auth/login.php',
         'title' => 'Se connecter',
     ],
+
+    'logout' => [
+        'file' => 'pages/1.auth/logout.php',
+        'title' => 'Se déconnecter'
+    ],
 ];
 
 $page = $_GET['page'] ?? '';
@@ -98,7 +103,7 @@ if ($route === null) {
     ];
 }
 
-$requiredRoles = $route['roles'] ?? null;
+$requiredRoles = $route['role'] ?? null;
 if ($requiredRoles !== null) {
     if (!isset($_SESSION['user'])) {
         header("Location: index.php?page=login");
