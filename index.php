@@ -41,14 +41,13 @@ $routes = [
         'file' => 'pages/2.prestations/prestations-delete.php',
         'title' => 'Supprimer une préstation',
         'role' => ['ADMIN']
-    ],
-    
+    ],    
 
     // Réservations ()
     'Reservations' => [
         'file' => 'pages/reservations.php',
         'title' => 'Réserver un créneau',
-        'roles' => ['user', 'admin']
+        //'role' => ['user', 'admin']
     ],
 
 
@@ -71,9 +70,6 @@ $routes = [
         'title' => 'Inscription à un atelier',
         // 'roles' => ['user', 'admin']
     ],
-
-
-
 
     // Authentification
 

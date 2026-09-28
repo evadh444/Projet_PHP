@@ -110,7 +110,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div>
-        <label for="prix">Prix : *</label>
+        <label for="prix">Prix : </label>
         <input type="number" name="prix" id="prix" required value="<?= $values['prix'] ?>">
         <?php if (isset($errors['prix'])) : ?>
             <span class="error"><?= $errors['prix'] ?></span>

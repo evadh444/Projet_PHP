@@ -22,7 +22,7 @@ print_r($prestations);
                 <a href="index.php?page=Prestation-details&amp;id=<?= $prestation['PrestationId'] ?>" class="btn">Détails</a>
 
                 <?php if (isset($_SESSION['user'])) : ?>
-                    <a href="index.php?page=reservations&amp;id=<?= $prestation['PrestationId'] ?>" class="btn">Réserver</a>
+                    <a href="index.php?page=Reservations&amp;id=<?= $prestation['PrestationId'] ?>" class="btn">Réserver</a>
                 <?php else : ?>
                     <a href="index.php?page=login" class="btn">Réserver</a>
                 <?php endif ?>  <!-- 2 reserver car lecture du bouton possible si pas connecté mais demande de connexion lors du clic -->
