@@ -23,7 +23,7 @@ if ($password === '') {
 // Vérifier si les identifiants sont corrects + redirection vers une page si ok
 
 if(!$errors) {
-    $sql = "SELECT id, email, mot_de_passe, role FROM utilisateur WHERE email =?";
+    $sql = "SELECT UseId, email, mot_de_passe, role FROM User WHERE email =?";
     $statement = $pdo->prepare($sql);
     $statement->execute([$values['email']]);
     $user = $statement->fetch();   // Récup. une seule ligne
@@ -48,6 +48,14 @@ if(!$errors) {
     <?php if (isset($errors['global'])) : ?>
         <span class="error><?=  $errors['global'] ?></span>
     <?php endif ?>
+
+    <div>
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" value="<?= $values['email'] ?>">
+    <?php if(isset($errors['email'])) : ?>
+        <span class="error"><?= $errors['email'] ?></span>
+    <?php endif ?>
+    </div>
 
     <div>
         <label for="password">Mot de passe:</label>

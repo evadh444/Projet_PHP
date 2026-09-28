@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <form method="post">
     <div>
         <label for="email">E-mail:</label>
-        <input type="email" name="email" id="email" value="<?=  $values['email'] ?>>
+        <input type="email" name="email" id="email" value="<?=  $values['email'] ?>">
         <?php if (isset($errors['email'])) : ?>
             <span class="error"><?=  $errors['email'] ?></span>
         <?php endif ?>
