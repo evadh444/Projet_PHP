@@ -11,7 +11,7 @@ $routes = [
         'title' => 'Accueil'
     ],
 
-    // Prestations
+    // Prestations (read, details, create, edit, delete)
     'Prestations' => [
         'file' => 'pages/2.prestations/prestations-list.php',
         'title' => 'Toutes les prestations',
@@ -29,10 +29,21 @@ $routes = [
         'title' => 'Créer une préstation',
         // 'roles' => ['admin']
 
-    ],                                  //Creer
-    //Edit(ou Update)
-    //Delete
+    ],
+    
+    'Prestation-edit' => [
+        'file' => 'pages/2.prestations/prestations-edit.php',
+        'title' => 'Modifier une préstation',
+        // 'role' => [admin]
+    ],
+    
+    'Prestation-delete' => [
+        'file' => 'pages/2.prestations/prestations-delete.php',
+        'title' => 'Supprimer une préstation'
+    ],
+    
 
+    // Réservations ()
     'Reservations' => [
         'file' => 'pages/reservations.php',
         'title' => 'Réserver un créneau',
@@ -40,7 +51,7 @@ $routes = [
     ],
 
 
-
+    // Ateliers (read, details, create, edit, delete)
     // Ateliers
     'Ateliers' => [
         'file' => 'pages/3.ateliers/ateliers-list.php',
@@ -53,6 +64,8 @@ $routes = [
         'title' => 'Détails de l\'atelier'
     ],
 
+
+    
     'Inscriptions' => [
         'file' => 'pages/inscriptions.php',
         'title' => 'Inscription à un atelier',
