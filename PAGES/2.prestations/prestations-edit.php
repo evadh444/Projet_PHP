@@ -64,11 +64,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     try {
         $sql = "UPDATE Prestation
-                SET 
-                    nomPrestation = ?,
+                SET nomPrestation = ?,
                     description = ?,
                     prix = ?,
-                    dureeMinute = ?,
+                    dureeMinute = ?
                 WHERE PrestationId = ?";
 
     $statement = $pdo->prepare($sql);
@@ -123,6 +122,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (isset($errors['dureeMinute'])) : ?>
             <span class="error"><?=  $errors['dureeMinute'] ?></span>
         <?php endif ?>
+    </div>
+
+    <div>
+        <label for="description">Description : </label>
+        <textarea name="description" id="description"><?= htmlspecialchars($values['description'] ?? '') ?></textarea>
     </div>
 
     <button>Modifier la préstation</button>
