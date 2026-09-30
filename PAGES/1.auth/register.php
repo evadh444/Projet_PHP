@@ -2,10 +2,15 @@
 
 $errors = [];
 
-$values = [ 'email' => '' ];
+$values = [
+    'nom' => '',
+    'prenom' => '',
+    'email' => '' ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    $values['nom'] = trim($_POST['nom']) ?? '';
+    $values['prenom'] = trim($_POST['prenom']) ?? '';
     $values['email'] = trim($_POST['email']) ?? '';
     $password = trim($_POST['password']);
     $confirmation = trim($_POST['confirmation']);
@@ -26,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['password'] = "Le mot de passe est obligatoire.";
     }
     else if (strlen($password) < 8) {
-        $erros['password'] = "Le mot de passe doit faire minimum 8 caractères.";
+        $errors['password'] = "Le mot de passe doit faire minimum 8 caractères.";
     }
 
     if ($password !== $confirmation) {
@@ -38,11 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-            $sql = "INSERT INTO utilisateur(email, mot_de_passe)
-                    VALUES (?, ?)";
+            $sql = "INSERT INTO [User](nom, prenom, email, passwordHash)
+                    VALUES (?, ?, ?, ?)";
             
             $statement = $pdo->prepare($sql);
-            $statement->execute([$values['email'], $password_hash]);
+            $statement->execute([ $values['nom'], $values['prenom'], $values['email'], $password_hash]);
 
             $_SESSION['user'] = [
                 'id' => $pdo->lastInsertId(),
@@ -66,6 +71,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <h1>S'inscrire</h1>
 
 <form method="post">
+
+    <div>
+        <label for="nom">Nom :</label>
+        <input type="text" name="nom" id="nom" value="<?=  $values['nom'] ?>">
+    </div>
+
+    <div>
+        <label for="nom">Prenom :</label>
+        <input type="text" name="prenom" id="prenom" value="<?=  $values['prenom'] ?>">
+    </div>
+
     <div>
         <label for="email">E-mail:</label>
         <input type="email" name="email" id="email" value="<?=  $values['email'] ?>">
