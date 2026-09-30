@@ -35,6 +35,7 @@ if (!$prestation) {
 
 // Préparer les valeurs du formulaire
 $values = [
+    'PrestationId' => $id, // pour que ce soit l'id de la prestation selectionné à la reservation et pas l'id de la prestation cliqué
     'dateRdv' => '',
     'heureRdv' => '',
     'commentaire' => ''
@@ -70,7 +71,7 @@ if(!$errors) {
             $values['dateRdv'],
             $values['heureRdv'],
             $values['commentaire'] !== '' ? $values['commentaire'] : null,
-            $id,
+            $values['PrestationId'], //tjr pour recup. l'id de la presta. séléctionné et pas de la presta. cliqué
             $_SESSION['user']['id']
         ]);
 
@@ -103,12 +104,12 @@ if(!$errors) {
     <label for="PrestationId">Préstation : </label>
     <select name="PrestationId" id="PrestationId">
         <?php foreach ($prestations as $prestation) : ?>
-            <option value="
-                <?= $prestation['PrestationId'] ?>"  
+            <option value=
+                "<?= $prestation['PrestationId'] ?>"  
                 data-prix="<?=  $prestation['prix'] ?>"
-                data-duree="<?= $prestations['dureeMinute'] ?>"
+                data-duree="<?= $prestation['dureeMinute'] ?>"
                 data-description="<?= htmlspecialchars($prestation['description'] ?? '') ?>"
-                <?=  $prestation['PrestationId'] == $id ? 'selected' : '' ?>>
+                <?=  $prestation['PrestationId'] == $values['PrestationId'] ? 'selected' : '' ?>>
                 <?= htmlspecialchars($prestation['nomPrestation']) ?>
             </option>
         <?php endforeach ?>
@@ -117,7 +118,7 @@ if(!$errors) {
     <div class="infos-prestation">
         <p>Prix : <span id="prix"></span> €</p>
         <p>Durée : <span id="duree"></span> min.</p>
-        <p>Description : <span id="description"></span>/p>
+        <p>Description : <span id="description"></span></p>
     </div>
 
     <div>
@@ -157,6 +158,8 @@ if(!$errors) {
 
     function afficherInfos() {
         const option = select.options[select.selectedIndex]; //Récuperer chaque option (data-) dans 'select'
+
+        console.log("dataset:", option.dataset);
 
         document.getElementById('prix').textContent = option.dataset.prix;
         document.getElementById('duree').textContent = option.dataset.duree;
