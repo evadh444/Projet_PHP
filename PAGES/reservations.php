@@ -1,5 +1,13 @@
 <?php
 
+//Selecteur prestations
+$sql = "SELECT PrestationId, nomPrestation, description, prix, dureeMinute
+        FROM Prestation
+        WHERE estActif = 1        -- si prestation active donc disponible
+        ORDER BY nomPrestation ASC";
+
+$prestations = $pdo->query($sql)->fetchAll();  // si valeurs invariables, autre methode (statement-prepare-execute) si variables
+
 // Récuperer l'id et la prestation
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
@@ -85,12 +93,33 @@ if(!$errors) {
 </style>
 
 <h1>Réserver une préstation</h1>
-<h2><?=  htmlspecialchars($prestation['nomPrestation']) ?></h2>
+<!-- <h2><?=  htmlspecialchars($prestation['nomPrestation']) ?></h2>  Si affichage simple, mais je voulais un selecteur donc dans <form>
 
 <p>Prix : <?=  htmlspecialchars($prestation['prix']) ?> €</p>
-<p>Durée : <?=  htmlspecialchars($prestation['dureeMinute']) ?> min.</p>
+<p>Durée : <?=  htmlspecialchars($prestation['dureeMinute']) ?> min.</p> -->
 
 <form method="post">
+
+    <label for="PrestationId">Préstation : </label>
+    <select name="PrestationId" id="PrestationId">
+        <?php foreach ($prestations as $prestation) : ?>
+            <option value="
+                <?= $prestation['PrestationId'] ?>"  
+                data-prix="<?=  $prestation['prix'] ?>"
+                data-duree="<?= $prestations['dureeMinute'] ?>"
+                data-description="<?= htmlspecialchars($prestation['description'] ?? '') ?>"
+                <?=  $prestation['PrestationId'] == $id ? 'selected' : '' ?>>
+                <?= htmlspecialchars($prestation['nomPrestation']) ?>
+            </option>
+        <?php endforeach ?>
+    </select>
+
+    <div class="infos-prestation">
+        <p>Prix : <span id="prix"></span> €</p>
+        <p>Durée : <span id="duree"></span> min.</p>
+        <p>Description : <span id="description"></span>/p>
+    </div>
+
     <div>
         <label for="dateRdv">Date du RDV : * </label>
         <input type="date" name="dateRdv" id="dateRdv" required value="<?= htmlspecialchars($values['dateRdv']) ?>">
@@ -122,3 +151,18 @@ if(!$errors) {
 
     <p>* champ obligatoire</p>
 </form>
+
+<script>  // ajout d'un peu de JavaScript pour mon selecteur (data-) pour que les infos liés à la prestation s'affichent en dessous et pas dans le selecteur 
+    const select = document.getElementById('PrestationId');    // aller chercher l'id et le mettre dans 'select'
+
+    function afficherInfos() {
+        const option = select.options[select.selectedIndex]; //Récuperer chaque option (data-) dans 'select'
+
+        document.getElementById('prix').textContent = option.dataset.prix;
+        document.getElementById('duree').textContent = option.dataset.duree;
+        document.getElementById('description').textContent = option.dataset.description;
+    }
+
+    select.addEventListener('change', afficherInfos); // afficher les infos correspondantes quand l'utilisateur change de prestation
+    afficherInfos(); // Lancer la fonction à l'ouverture de la page pour pas que les infos soient vides
+</script>

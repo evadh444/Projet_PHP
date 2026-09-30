@@ -1,13 +1,23 @@
 <?php
 
-$query = "SELECT PrestationId, nomPrestation, prix, dureeMinute FROM Prestation ORDER BY nomPrestation";
+$query = "SELECT PrestationId, nomPrestation, prix, dureeMinute FROM Prestation ORDER BY PrestationId ASC"; //ASC=ordre croissant
 $prestations = $pdo->query($query)->fetchAll();
 
-print_r($prestations);
+//print_r($prestations);
 
 ?>
 
 <h1>Liste des Préstations</h1>
+
+<?php if (
+    isset($_SESSION['user']) &&
+    $_SESSION['user']['role'] === 'ADMIN'
+) : ?>
+
+    <a href="index.php?page=Prestation-create" class="btn">Ajouter une préstation</a>
+
+<?php endif ?>
+
 <p><?= count($prestations) ?> préstation(s) disponible(s)</p>
 
 <div class="cards">
@@ -15,8 +25,8 @@ print_r($prestations);
 
         <article class="card">
             <h2><?=  $prestation ["nomPrestation"] ?></h2>
-            <p><?= $prestation["prix"] ?></p>
-            <p><?=  $prestation["dureeMinute"] ?></p>
+            <p><?= $prestation["prix"] ?> €</p>
+            <p><?=  $prestation["dureeMinute"] ?>min.</p>
 
             <div class="actions">
                 <a href="index.php?page=Prestation-details&amp;id=<?= $prestation['PrestationId'] ?>" class="btn">Détails</a>

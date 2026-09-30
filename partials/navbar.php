@@ -1,13 +1,12 @@
 <nav>
-    <ul>
+    <ul class="menu-principal">
         <li><a href="index.php">Accueil</a></li> 
-
         <li><a href="index.php?page=Prestations">Préstations</a></li>
         <li><a href="index.php?page=Ateliers">Ateliers</a></li>
     </ul>
 
     <!-- Rajouter les boutons s'inscrire / se connecter sauf si déjà le cas = se déconnecter -->
-    <ul>
+    <ul class="menu-connexion">
         <?php if (!isset($_SESSION['user'])) : ?>
         <li><a href="index.php?page=login">Se connecter</a></li>
         <li><a href="index.php?page=register">S'inscrire</a></li>
